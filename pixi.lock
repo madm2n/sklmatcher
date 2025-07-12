@@ -9353,10 +9353,10 @@ packages:
   timestamp: 1733381032766
 - pypi: ./
   name: sklmatcher
-  version: 0.1.dev11+gebe1486.d20250712
-  sha256: 609fb5882702c9807b372fc456514787764f5150fc29bcda469176240f56d19d
+  version: 0.1.dev12+g5d51485.d20250712
+  sha256: 925d4c3a0e972f1372f24959259c62ae276a97d855368eccf6de16262d196609
   requires_dist:
-  - scikit-learn>=1.7.0
+  - scikit-learn
   requires_python: '>=3.9'
   editable: true
 - conda: https://conda.anaconda.org/conda-forge/noarch/snowballstemmer-3.0.1-pyhd8ed1ab_0.conda
