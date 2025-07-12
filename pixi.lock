@@ -9353,8 +9353,8 @@ packages:
   timestamp: 1733381032766
 - pypi: ./
   name: sklmatcher
-  version: 0.1.dev12+g5d51485.d20250712
-  sha256: 925d4c3a0e972f1372f24959259c62ae276a97d855368eccf6de16262d196609
+  version: 0.1.dev14+gf6e7fd8.d20250712
+  sha256: 1cae896984741d7a2d26479fa0a1ecc05ca8bc85986484fdf9a78a85ba7a4f3e
   requires_dist:
   - scikit-learn
   requires_python: '>=3.9'

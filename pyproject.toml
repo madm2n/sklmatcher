@@ -59,7 +59,7 @@ pytest = "*"
 pytest-cov = "*"
 
 [tool.pixi.feature.test.tasks]
-test = { cmd = "pytest -vsl --cov=sklmatcher --cov-report=xml sklmatcher" }
+test = { cmd = "pytest -vsl --cov=sklmatcher --cov-report=xml sklmatcher --junitxml=junit.xml -o junit_family=legacy" }
 
 [tool.pixi.feature.doc.dependencies]
 matplotlib = "*"

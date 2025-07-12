@@ -10,10 +10,10 @@ import sys
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 from importlib.metadata import version as get_version
 
-project = "Scikit-learn Project Template"
-copyright = "2016, V. Birodkar"
-author = "V. Birodkar"
-release = get_version('sklmatcher')
+project = "Scikit-learn Simple Entity Matcher"
+copyright = "2025, Stepan Protsak"
+author = "Stepan Protsak"
+release = get_version("sklmatcher")
 version = ".".join(release.split(".")[:3])
 
 # -- General configuration ---------------------------------------------------
@@ -66,9 +66,9 @@ html_theme_options = {
 }
 
 html_context = {
-    "github_user": "scikit-learn-contrib",
+    "github_user": "madm2n",
     "github_repo": "sklmatcher",
-    "github_version": "master",
+    "github_version": "main",
     "doc_path": "doc",
 }
 
