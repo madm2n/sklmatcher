@@ -45,14 +45,14 @@ sklmatcher = { path = ".", editable = true }
 
 [tool.pixi.feature.lint.dependencies]
 # The version below should be aligned with the one of `.pre-commit-config.yaml`
-black = "23.3.0"
-pre-commit = "3.7.1"
-ruff = "0.5.3"
+black = "==25.1.0"
+pre-commit = "==4.2.0"
+ruff = "==0.12.3"
 
 [tool.pixi.feature.lint.tasks]
 black = { cmd = "black --check --diff sklmatcher && black --check --diff examples" }
 ruff = { cmd = "ruff check --output-format=full sklmatcher && ruff check --output-format=full examples" }
-lint = { depends_on = ["black", "ruff"] }
+lint = { depends-on = ["black", "ruff"] }
 
 [tool.pixi.feature.test.dependencies]
 pytest = "*"
