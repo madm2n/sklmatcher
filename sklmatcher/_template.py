@@ -6,11 +6,11 @@ This is a module to be used as a reference for building other modules
 # License: BSD 3 clause
 
 import numpy as np
+from scipy import sparse
 from sklearn.base import BaseEstimator, ClassifierMixin, TransformerMixin, _fit_context
 from sklearn.metrics import euclidean_distances
 from sklearn.utils.multiclass import check_classification_targets
 from sklearn.utils.validation import check_is_fitted, validate_data
-from scipy import sparse
 
 
 class TemplateEstimator(BaseEstimator):
