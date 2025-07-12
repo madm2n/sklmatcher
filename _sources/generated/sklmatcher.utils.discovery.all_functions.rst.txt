@@ -1,0 +1,6 @@
+﻿sklmatcher.utils.discovery.all\_functions
+=========================================
+
+.. currentmodule:: sklmatcher.utils.discovery
+
+.. autofunction:: all_functions

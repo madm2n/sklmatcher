@@ -1,0 +1,6 @@
+﻿sklmatcher.utils.discovery.all\_displays
+========================================
+
+.. currentmodule:: sklmatcher.utils.discovery
+
+.. autofunction:: all_displays
