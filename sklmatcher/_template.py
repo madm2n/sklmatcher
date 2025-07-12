@@ -9,7 +9,8 @@ import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin, TransformerMixin, _fit_context
 from sklearn.metrics import euclidean_distances
 from sklearn.utils.multiclass import check_classification_targets
-from sklearn.utils.validation import check_is_fitted
+from sklearn.utils.validation import check_is_fitted, validate_data
+from scipy import sparse
 
 
 class TemplateEstimator(BaseEstimator):
@@ -73,12 +74,12 @@ class TemplateEstimator(BaseEstimator):
         self : object
             Returns self.
         """
-        # `_validate_data` is defined in the `BaseEstimator` class.
+        # `validate_data` is defined in the `BaseEstimator` class.
         # It allows to:
         # - run different checks on the input data;
         # - define some attributes associated to the input data: `n_features_in_` and
         #   `feature_names_in_`.
-        X, y = self._validate_data(X, y, accept_sparse=True)
+        X, y = validate_data(self, X, y, accept_sparse=True)
         self.is_fitted_ = True
         # `fit` should always return `self`
         return self
@@ -100,8 +101,17 @@ class TemplateEstimator(BaseEstimator):
         check_is_fitted(self)
         # We need to set reset=False because we don't want to overwrite `n_features_in_`
         # `feature_names_in_` but only check that the shape is consistent.
-        X = self._validate_data(X, accept_sparse=True, reset=False)
+        X = validate_data(self, X, accept_sparse=True, reset=False)
         return np.ones(X.shape[0], dtype=np.int64)
+
+    def __sklearn_tags__(self):
+        # This is a quick example to show the tags API:\
+        # https://scikit-learn.org/dev/developers/develop.html#estimator-tags
+        # Here, our transformer does not do any operation in `fit` and only validate
+        # the parameters. Thus, it is stateless.
+        tags = super().__sklearn_tags__()
+        tags.input_tags.sparse = True
+        return tags
 
 
 # Note that the mixin class should always be on the left of `BaseEstimator` to ensure
@@ -177,12 +187,12 @@ class TemplateClassifier(ClassifierMixin, BaseEstimator):
         self : object
             Returns self.
         """
-        # `_validate_data` is defined in the `BaseEstimator` class.
+        # `validate_data` is defined in the `BaseEstimator` class.
         # It allows to:
         # - run different checks on the input data;
         # - define some attributes associated to the input data: `n_features_in_` and
         #   `feature_names_in_`.
-        X, y = self._validate_data(X, y)
+        X, y = validate_data(self, X, y)
         # We need to make sure that we have a classification task
         check_classification_targets(y)
 
@@ -216,7 +226,7 @@ class TemplateClassifier(ClassifierMixin, BaseEstimator):
         # Input validation
         # We need to set reset=False because we don't want to overwrite `n_features_in_`
         # `feature_names_in_` but only check that the shape is consistent.
-        X = self._validate_data(X, reset=False)
+        X = validate_data(self, X, reset=False)
 
         closest = np.argmin(euclidean_distances(X, self.X_), axis=1)
         return self.y_[closest]
@@ -272,7 +282,7 @@ class TemplateTransformer(TransformerMixin, BaseEstimator):
         self : object
             Returns self.
         """
-        X = self._validate_data(X, accept_sparse=True)
+        X = validate_data(self, X, accept_sparse=True)
 
         # Return the transformer
         return self
@@ -291,18 +301,25 @@ class TemplateTransformer(TransformerMixin, BaseEstimator):
             The array containing the element-wise square roots of the values
             in ``X``.
         """
+        check_is_fitted(self)
         # Since this is a stateless transformer, we should not call `check_is_fitted`.
         # Common test will check for this particularly.
 
         # Input validation
         # We need to set reset=False because we don't want to overwrite `n_features_in_`
         # `feature_names_in_` but only check that the shape is consistent.
-        X = self._validate_data(X, accept_sparse=True, reset=False)
+        X = validate_data(self, X, accept_sparse=True, reset=False)
+
+        if sparse.issparse(X):
+            return X.sqrt()
+
         return np.sqrt(X)
 
-    def _more_tags(self):
+    def __sklearn_tags__(self):
         # This is a quick example to show the tags API:\
         # https://scikit-learn.org/dev/developers/develop.html#estimator-tags
         # Here, our transformer does not do any operation in `fit` and only validate
         # the parameters. Thus, it is stateless.
-        return {"stateless": True}
+        tags = super().__sklearn_tags__()
+        tags.input_tags.sparse = True
+        return tags
